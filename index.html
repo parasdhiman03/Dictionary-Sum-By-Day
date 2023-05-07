@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dictionary Sum By Day</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #008080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    form {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #008080;
+      color: white;
+      padding: 10px;
+      font-size: 1.2em;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005757;
+    }
+
+    #output {
+      margin: 20px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      font-size: 1.2em;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+  <script src="dictionary.js"></script>
+  <script src="exceptions.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Dictionary Sum By Day</h1>
+  </header>
+
+  <form id="dictionary-form">
+    <label for="dictionary-input">Enter dictionary:</label>
+    <textarea id="dictionary-input" name="dictionary-input" placeholder="Enter a JSON object representing the dictionary"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    const form = document.querySelector('#dictionary-form');
+    const output = document.querySelector('#output');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const dictionaryInput = document.querySelector('#dictionary-input').value;
+      const dictionary = JSON.parse(dictionaryInput);
+      try {
+        const result = solution(dictionary);
+        output.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+      } catch (e) {
+        if (e instanceof InvalidDictionaryException) {
+          output.innerHTML = `<pre>${e.message}</pre>`;
+        } else {
+          throw e;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
